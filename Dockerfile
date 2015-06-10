@@ -87,10 +87,11 @@ RUN GOPATH=/src/go go get github.com/holizz/pw && \
 RUN adduser --gecos '' --shell /bin/zsh --disabled-password core
 RUN usermod -aG sudo core
 
-COPY dotfiles/ /home/core/
+ONBUILD COPY dotfiles/ /home/core/
 
+RUN mkdir /home/core/.ssh
 # Copy in id_rsa
-COPY keys/id_rsa /home/core/.ssh/id_rsa
+ONBUILD COPY keys/id_rsa /home/core/.ssh/id_rsa
 # Symlink known_hosts
 RUN ln -s /workbench/home/.ssh/known_hosts /home/core/.ssh/known_hosts
 
@@ -108,7 +109,7 @@ RUN ssh-keyscan -t rsa git.dxw.net > /src/known_hosts && \
     chmod 755 /src/core-ssh.sh
 
 # pluginscan
-RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:tools/pluginscan2 pluginscan && \
+ONBUILD RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:tools/pluginscan2 pluginscan && \
     mkdir -p /usr/local/share/pluginscan && \
     cp -r /src/pluginscan/* /usr/local/share/pluginscan && \
     cd /usr/local/share/pluginscan && bundle install --path=vendor/bundle && \
@@ -117,13 +118,13 @@ RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:tools/plu
     chmod 755 /usr/local/bin/pluginscan
 
 # pupdate
-RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:plugin-updater && \
+ONBUILD RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:plugin-updater && \
     cp -r /src/plugin-updater /usr/local/share/pupdate && \
     /bin/echo -e '#!/bin/sh\nset -e\ncd /usr/local/share/pupdate/updating\n./update.sh $1 git@git.dxw.net:wordpress-plugins/$1\ncd -' > /usr/local/bin/pupdate && \
     chmod 755 /usr/local/bin/pupdate
 
 # phar-install
-RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:install-phar phar-install && \
+ONBUILD RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:install-phar phar-install && \
     install /src/phar-install/bin/phar-install /usr/local/bin/phar-install
 
 ##############################################################################
