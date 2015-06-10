@@ -87,11 +87,7 @@ RUN GOPATH=/src/go go get github.com/holizz/pw && \
 RUN adduser --gecos '' --shell /bin/zsh --disabled-password core
 RUN usermod -aG sudo core
 
-ONBUILD COPY dotfiles/ /home/core/
-
 RUN mkdir /home/core/.ssh
-# Copy in id_rsa
-ONBUILD COPY keys/id_rsa /home/core/.ssh/id_rsa
 # Symlink known_hosts
 RUN ln -s /workbench/home/.ssh/known_hosts /home/core/.ssh/known_hosts
 
@@ -101,12 +97,20 @@ RUN chown -R core:core /home/core
 RUN echo '{"interactive":false}' > /home/core/.bowerrc
 
 ##############################################################################
-## Install tools from private repos
+## Allow cloning private repos
 
-# Allow cloning private repos
 RUN ssh-keyscan -t rsa git.dxw.net > /src/known_hosts && \
     /bin/echo -e '#!/bin/sh\nssh -i /home/core/.ssh/id_rsa -o "UserKnownHostsFile /src/known_hosts" $@' > /src/core-ssh.sh && \
     chmod 755 /src/core-ssh.sh
+
+##############################################################################
+## ONBUILD
+
+# Dotfiles
+ONBUILD COPY dotfiles/ /home/core/
+
+# Copy in id_rsa
+ONBUILD COPY keys/id_rsa /home/core/.ssh/id_rsa
 
 # pluginscan
 ONBUILD RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:tools/pluginscan2 pluginscan && \
