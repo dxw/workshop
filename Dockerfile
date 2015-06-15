@@ -135,5 +135,4 @@ ONBUILD RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:i
 ## Startup
 
 VOLUME /workbench
-WORKDIR /workbench/src
 CMD ["tmux", "-u2"]
