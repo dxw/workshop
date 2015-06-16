@@ -48,27 +48,6 @@ RUN gem install bundler sass && \
     pip install --upgrade docker-compose && \
     npm install -g jshint grunt-cli bower json
 
-# wp-cli
-RUN wget --quiet https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/local/bin/wp && \
-    chmod 755 /usr/local/bin/wp
-
-# composer
-RUN wget --quiet https://getcomposer.org/composer.phar -O /usr/local/bin/composer && \
-    chmod 755 /usr/local/bin/composer
-
-# WP tools
-RUN git -C /src clone --quiet --recursive https://github.com/dxw/srdb.git && \
-    ln -s /src/srdb/srdb /usr/local/bin/srdb
-
-# phpunit
-RUN wget https://phar.phpunit.de/phpunit.phar -O /usr/local/bin/phpunit && \
-    chmod 755 /usr/local/bin/phpunit
-
-# whippet
-RUN git -C /src clone --quiet --recursive https://github.com/dxw/whippet && \
-    cp -r /src/whippet /usr/local/share/whippet && \
-    ln -s /usr/local/share/whippet/bin/whippet /usr/local/bin/whippet
-
 # Go
 RUN wget --quiet https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz -O /src/go.tar.gz && \
     tar -C /usr/local -xzf /src/go.tar.gz && \
@@ -81,6 +60,24 @@ RUN GOPATH=/src/go go get github.com/dxw/git-env && \
     GOPATH=/src/go go get github.com/holizz/diceware && \
     mv /src/go/bin/* /usr/local/bin/ && \
     rm -rf /src/go
+
+# composer
+RUN wget --quiet https://getcomposer.org/composer.phar -O /usr/local/bin/composer && \
+    chmod 755 /usr/local/bin/composer
+ENV COMPOSER_HOME=/usr/local/lib/composer
+ENV PATH=$PATH:/usr/local/lib/composer/vendor/bin
+
+# composer tools
+RUN composer global require phpunit/phpunit && \
+    composer global require wp-cli/wp-cli && \
+    rm -rf $COMPOSER_HOME/cache
+
+# Other tools
+RUN git -C /src clone --quiet --recursive https://github.com/dxw/srdb.git && \
+    ln -s /src/srdb/srdb /usr/local/bin/srdb
+RUN git -C /src clone --quiet --recursive https://github.com/dxw/whippet && \
+    cp -r /src/whippet /usr/local/share/whippet && \
+    ln -s /usr/local/share/whippet/bin/whippet /usr/local/bin/whippet
 
 ##############################################################################
 ## Add user and dotfiles
