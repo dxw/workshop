@@ -76,7 +76,8 @@ RUN wget --quiet https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.g
 ENV PATH=$PATH:/usr/local/go/bin
 
 # Go tools
-RUN GOPATH=/src/go go get github.com/holizz/pw && \
+RUN GOPATH=/src/go go get github.com/dxw/git-env && \
+    GOPATH=/src/go go get github.com/holizz/pw && \
     GOPATH=/src/go go get github.com/holizz/diceware && \
     mv /src/go/bin/* /usr/local/bin/ && \
     rm -rf /src/go
