@@ -25,7 +25,8 @@ RUN apt-get install --no-install-recommends -y build-essential pkg-config automa
                                                curl wget bind9-host netcat whois ca-certificates dnsutils \
                                                silversearcher-ag sloccount zip unzip \
                                                libpcre3-dev liblzma-dev libxml2-dev libxslt1-dev libmysql++-dev libsqlite3-dev \
-                                               optipng libtool nasm libjpeg-turbo-progs mysql-client nmap cloc ed ripmime oathtool cloc
+                                               optipng libtool nasm libjpeg-turbo-progs mysql-client nmap cloc ed ripmime oathtool cloc \
+                                               libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto
 
 # dpkg
 RUN wget --quiet http://downloads.drone.io/master/drone.deb -O /src/drone.deb && \
@@ -47,6 +48,12 @@ RUN wget --quiet https://bootstrap.pypa.io/get-pip.py -O /src/get-pip.py && \
 RUN gem install bundler sass && \
     pip install --upgrade docker-compose && \
     npm install -g jshint grunt-cli bower json
+
+# git
+RUN wget --quiet https://github.com/git/git/archive/v2.4.4.tar.gz -O /src/git.tar.gz && \
+    tar -C /src -xzf /src/git.tar.gz && \
+    make -C /src/git-* prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
+    rm -rf /src/git.tar.gz /src/git-*
 
 # Go
 RUN wget --quiet https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz -O /src/go.tar.gz && \
