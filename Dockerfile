@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM ubuntu:vivid
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get dist-upgrade -y
@@ -18,7 +18,7 @@ RUN echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
 RUN mkdir /src
 
 RUN apt-get install --no-install-recommends -y build-essential pkg-config automake \
-                                               locales-all man-db manpages less manpages-dev \
+                                               locales man-db manpages less manpages-dev \
                                                openssh-client tmux zsh vim-nox \
                                                git mercurial bzr tig git-flow \
                                                python3 python3-pip python python-pip ruby ruby-dev php5-cli php5-mysql php5-gd nodejs npm perl perl-doc \
