@@ -12,6 +12,9 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 RUN apt-get install --no-install-recommends -y sudo
 RUN echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
 
+# Fix "perl: warning: Setting locale failed."
+RUN locale-gen en_US.UTF-8 en_GB.UTF-8
+
 ##############################################################################
 ## Install tools
 
