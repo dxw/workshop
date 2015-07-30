@@ -53,7 +53,7 @@ RUN gem install bundler sass && \
     npm install -g jshint grunt-cli bower json
 
 # git
-RUN wget --quiet https://github.com/git/git/archive/v2.4.4.tar.gz -O /src/git.tar.gz && \
+RUN wget --quiet https://github.com/git/git/archive/v2.5.0.tar.gz -O /src/git.tar.gz && \
     tar -C /src -xzf /src/git.tar.gz && \
     make -C /src/git-* prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
     rm -rf /src/git.tar.gz /src/git-*
