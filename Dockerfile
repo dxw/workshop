@@ -74,13 +74,14 @@ RUN GOPATH=/src/go go get github.com/dxw/git-env && \
 # composer
 RUN wget --quiet https://getcomposer.org/composer.phar -O /usr/local/bin/composer && \
     chmod 755 /usr/local/bin/composer
-ENV COMPOSER_HOME=/usr/local/lib/composer
 ENV PATH=$PATH:/usr/local/lib/composer/vendor/bin
 
 # composer tools
-RUN composer global require phpunit/phpunit && \
+RUN COMPOSER_HOME=/usr/local/lib/composer sh -c '\
+    composer global require phpunit/phpunit && \
     composer global require wp-cli/wp-cli && \
-    rm -rf $COMPOSER_HOME/cache
+    rm -rf $COMPOSER_HOME/cache\
+    '
 
 # Other tools
 RUN git -C /src clone --quiet --recursive https://github.com/dxw/srdb.git && \
