@@ -59,7 +59,7 @@ RUN wget --quiet https://github.com/git/git/archive/v2.5.0.tar.gz -O /src/git.ta
     rm -rf /src/git.tar.gz /src/git-*
 
 # Go
-RUN wget --quiet https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz -O /src/go.tar.gz && \
+RUN wget --quiet https://storage.googleapis.com/golang/go1.5.1.linux-amd64.tar.gz -O /src/go.tar.gz && \
     tar -C /usr/local -xzf /src/go.tar.gz && \
     rm /src/go.tar.gz
 ENV PATH=$PATH:/usr/local/go/bin
