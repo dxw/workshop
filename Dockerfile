@@ -127,7 +127,7 @@ ONBUILD RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:t
     cp -r /src/pluginscan/* /usr/local/share/pluginscan && \
     cd /usr/local/share/pluginscan && bundle install --path=vendor/bundle && \
     echo '#!/bin/sh' > /usr/local/bin/pluginscan && \
-    echo 'BUNDLE_GEMFILE=/usr/local/share/pluginscan/Gemfile exec bundle exec /usr/local/share/pluginscan/bin/pluginscan' >> /usr/local/bin/pluginscan && \
+    echo 'BUNDLE_GEMFILE=/usr/local/share/pluginscan/Gemfile exec bundle exec /usr/local/share/pluginscan/bin/pluginscan $@' >> /usr/local/bin/pluginscan && \
     chmod 755 /usr/local/bin/pluginscan
 
 # pupdate
