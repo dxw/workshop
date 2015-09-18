@@ -29,7 +29,7 @@ RUN apt-get install --no-install-recommends -y build-essential pkg-config automa
                                                silversearcher-ag sloccount zip unzip \
                                                libpcre3-dev liblzma-dev libxml2-dev libxslt1-dev libmysql++-dev libsqlite3-dev \
                                                optipng libtool nasm libjpeg-turbo-progs mysql-client nmap cloc ed ripmime oathtool cloc \
-                                               libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto iproute2 iputils-ping
+                                               libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto iproute2 iputils-ping xmlstarlet
 
 # dpkg
 RUN wget --quiet http://downloads.drone.io/master/drone.deb -O /src/drone.deb && \
