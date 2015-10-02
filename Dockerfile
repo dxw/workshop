@@ -74,7 +74,7 @@ RUN GOPATH=/src/go go get github.com/dxw/git-env && \
 # composer
 RUN wget --quiet https://getcomposer.org/composer.phar -O /usr/local/bin/composer && \
     chmod 755 /usr/local/bin/composer
-ENV PATH=$PATH:/usr/local/lib/composer/vendor/bin
+ENV PATH=$PATH:/usr/local/lib/composer/vendor/bin:~/.composer/vendor/bin
 
 # composer tools
 RUN COMPOSER_HOME=/usr/local/lib/composer sh -c '\
