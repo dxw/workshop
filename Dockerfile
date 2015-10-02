@@ -80,6 +80,7 @@ ENV PATH=$PATH:/usr/local/lib/composer/vendor/bin:~/.composer/vendor/bin
 RUN COMPOSER_HOME=/usr/local/lib/composer sh -c '\
     composer global require phpunit/phpunit && \
     composer global require wp-cli/wp-cli && \
+    composer global require fabpot/php-cs-fixer && \
     rm -rf $COMPOSER_HOME/cache\
     '
 
