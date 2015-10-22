@@ -81,6 +81,7 @@ RUN COMPOSER_HOME=/usr/local/lib/composer sh -c '\
     composer global require phpunit/phpunit && \
     composer global require wp-cli/wp-cli && \
     composer global require fabpot/php-cs-fixer && \
+    composer global require dxw/phar-install=dev-master && \
     rm -rf $COMPOSER_HOME/cache\
     '
 
@@ -136,10 +137,6 @@ ONBUILD RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:p
     cp -r /src/plugin-updater /usr/local/share/pupdate && \
     /bin/echo -e '#!/bin/sh\nset -e\ncd /usr/local/share/pupdate/updating\n./update.sh $1 git@git.dxw.net:wordpress-plugins/$1\ncd -' > /usr/local/bin/pupdate && \
     chmod 755 /usr/local/bin/pupdate
-
-# phar-install
-ONBUILD RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:install-phar phar-install && \
-    install /src/phar-install/bin/phar-install /usr/local/bin/phar-install
 
 ##############################################################################
 ## Startup
