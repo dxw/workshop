@@ -52,12 +52,6 @@ RUN gem install bundler sass && \
     pip install --upgrade docker-compose && \
     npm install -g jshint grunt-cli bower json
 
-# git
-RUN wget --quiet https://github.com/git/git/archive/v2.5.0.tar.gz -O /src/git.tar.gz && \
-    tar -C /src -xzf /src/git.tar.gz && \
-    make -C /src/git-* prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
-    rm -rf /src/git.tar.gz /src/git-*
-
 # Go
 RUN wget --quiet https://storage.googleapis.com/golang/go1.5.1.linux-amd64.tar.gz -O /src/go.tar.gz && \
     tar -C /usr/local -xzf /src/go.tar.gz && \
