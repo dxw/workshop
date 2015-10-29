@@ -38,9 +38,10 @@ RUN wget --quiet http://downloads.drone.io/master/drone.deb -O /src/drone.deb &&
 
 # Fix bad defaults
 RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
-    ln -s /usr/bin/nodejs /usr/local/bin/node &&\
-    echo 'error_reporting=E_ALL' > /etc/php5/cli/conf.d/99-dxw-errors.ini &&\
-    echo 'phar.readonly = Off' > /etc/php5/cli/conf.d/99-dxw-phar.ini
+    ln -s /usr/bin/nodejs /usr/local/bin/node && \
+    echo 'error_reporting=E_ALL' > /etc/php5/cli/conf.d/99-dxw-errors.ini && \
+    echo 'phar.readonly = Off' > /etc/php5/cli/conf.d/99-dxw-phar.ini && \
+    echo '{"interactive":false}' > /home/core/.bowerrc
 
 # Apparently pip2 from APT is broken
 RUN wget --quiet https://bootstrap.pypa.io/get-pip.py -O /src/get-pip.py && \
@@ -97,9 +98,6 @@ RUN mkdir /home/core/.ssh
 RUN ln -s /workbench/home/.ssh/known_hosts /home/core/.ssh/known_hosts
 
 RUN chown -R core:core /home/core
-
-# Don't ask
-RUN echo '{"interactive":false}' > /home/core/.bowerrc
 
 ##############################################################################
 ## Allow cloning private repos
