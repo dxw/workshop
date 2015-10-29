@@ -32,9 +32,3 @@ Prerequisites:
 Assuming you can access your site via http://mymachine.local:8000, run this script (and leave it running) and you'll be able to access it from http://mymachine.local.
 
     sudo ./port80.sh
-
-## Extra tools
-
-In tools/internal there are some tools designed to be used from within the workshop container.
-
-clean.sh - deletes unneeded images and containers. (check it does what you want first - it may delete data containers you don't want to delete)
