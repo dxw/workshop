@@ -18,7 +18,7 @@ RUN locale-gen en_US.UTF-8 en_GB.UTF-8
 ##############################################################################
 ## Install tools
 
-RUN mkdir /src
+RUN mkdir /src /home/core
 
 RUN apt-get install --no-install-recommends -y build-essential pkg-config automake \
                                                locales man-db manpages less manpages-dev \
@@ -88,50 +88,15 @@ RUN git -C /src clone --quiet --recursive https://github.com/dxw/whippet && \
     ln -s /usr/local/share/whippet/bin/whippet /usr/local/bin/whippet
 
 ##############################################################################
-## Add user and dotfiles
+## Add user
 
 RUN adduser --gecos '' --shell /bin/zsh --disabled-password core
 RUN usermod -aG sudo core
 
-RUN mkdir /home/core/.ssh
-# Symlink known_hosts
-RUN ln -s /workbench/home/.ssh/known_hosts /home/core/.ssh/known_hosts
-
-RUN chown -R core:core /home/core
-
-##############################################################################
-## Allow cloning private repos
-
-RUN ssh-keyscan -t rsa git.dxw.net > /src/known_hosts && \
-    /bin/echo -e '#!/bin/sh\nssh -i /home/core/.ssh/id_rsa -o "UserKnownHostsFile /src/known_hosts" $@' > /src/core-ssh.sh && \
-    chmod 755 /src/core-ssh.sh
-
-##############################################################################
-## ONBUILD
-
-# Dotfiles
-ONBUILD COPY dotfiles/ /home/core/
-
-# Copy in id_rsa
-ONBUILD COPY keys/id_rsa /home/core/.ssh/id_rsa
-
-# pluginscan
-ONBUILD RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:tools/pluginscan2 pluginscan && \
-    mkdir -p /usr/local/share/pluginscan && \
-    cp -r /src/pluginscan/* /usr/local/share/pluginscan && \
-    cd /usr/local/share/pluginscan && bundle install --path=vendor/bundle && \
-    echo '#!/bin/sh' > /usr/local/bin/pluginscan && \
-    echo 'BUNDLE_GEMFILE=/usr/local/share/pluginscan/Gemfile exec bundle exec /usr/local/share/pluginscan/bin/pluginscan $@' >> /usr/local/bin/pluginscan && \
-    chmod 755 /usr/local/bin/pluginscan
-
-# pupdate
-ONBUILD RUN GIT_SSH=/src/core-ssh.sh git -C /src clone --quiet git@git.dxw.net:plugin-updater && \
-    cp -r /src/plugin-updater /usr/local/share/pupdate && \
-    /bin/echo -e '#!/bin/sh\nset -e\ncd /usr/local/share/pupdate/updating\n./update.sh $1 git@git.dxw.net:wordpress-plugins/$1\ncd -' > /usr/local/bin/pupdate && \
-    chmod 755 /usr/local/bin/pupdate
-
 ##############################################################################
 ## Startup
 
+WORKDIR /workbench
+USER core
 VOLUME /workbench
 CMD ["tmux", "-u2"]
