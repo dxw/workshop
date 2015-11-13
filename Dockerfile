@@ -58,6 +58,7 @@ ENV PATH=$PATH:/usr/local/go/bin
 RUN GOPATH=/src/go go get github.com/dxw/git-env && \
     GOPATH=/src/go go get github.com/holizz/pw && \
     GOPATH=/src/go go get github.com/holizz/diceware && \
+    GOPATH=/src/go go get github.com/drone/drone-cli/drone && \
     mv /src/go/bin/* /usr/local/bin/ && \
     rm -rf /src/go
 
@@ -81,7 +82,6 @@ RUN git -C /src clone --quiet --recursive https://github.com/dxw/srdb.git && \
 RUN git -C /src clone --quiet --recursive https://github.com/dxw/whippet && \
     cp -r /src/whippet /usr/local/share/whippet && \
     ln -s /usr/local/share/whippet/bin/whippet /usr/local/bin/whippet
-RUN curl http://downloads.drone.io/drone-cli/drone_linux_amd64.tar.gz | tar -C /usr/local/bin -zx
 
 ##############################################################################
 ## Add user
