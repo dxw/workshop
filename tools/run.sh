@@ -1,7 +1,7 @@
 #!/bin/sh
 set -xe
 
-docker-machine start default
+docker-machine start default || true
 eval "$(docker-machine env default)"
 
 if test X`docker inspect --format='{{.State.Running}}' workshop` = Xtrue; then
