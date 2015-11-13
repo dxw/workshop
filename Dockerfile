@@ -31,11 +31,6 @@ RUN apt-get install --no-install-recommends -y build-essential pkg-config automa
                                                optipng libtool nasm libjpeg-turbo-progs mysql-client nmap cloc ed ripmime oathtool cloc \
                                                libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto iproute2 iputils-ping xmlstarlet
 
-# dpkg
-RUN wget --quiet http://downloads.drone.io/master/drone.deb -O /src/drone.deb && \
-    dpkg -i /src/drone.deb && \
-    rm /src/drone.deb
-
 # Fix bad defaults
 RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
     ln -s /usr/bin/nodejs /usr/local/bin/node && \
@@ -86,6 +81,7 @@ RUN git -C /src clone --quiet --recursive https://github.com/dxw/srdb.git && \
 RUN git -C /src clone --quiet --recursive https://github.com/dxw/whippet && \
     cp -r /src/whippet /usr/local/share/whippet && \
     ln -s /usr/local/share/whippet/bin/whippet /usr/local/bin/whippet
+RUN curl http://downloads.drone.io/drone-cli/drone_linux_amd64.tar.gz | tar -C /usr/local/bin -zx
 
 ##############################################################################
 ## Add user
