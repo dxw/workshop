@@ -20,17 +20,44 @@ What you will need to do:
 
 1. Make sure there's a docker-machine instance named default that uses VirtualBox (you can use an existing one but note that it will be modified): `docker-machine create --driver virtualbox default`
 2. Create your workbench, and chown it appropriately: `sudo mkdir /workbench && sudo chown tomdxw:staff /workbench`
-3. Clone this repo: `git clone git@git.dxw.net:workshop/base /workbench/workshop-base`
-4. Go there: `cd /workbench/workshop-base/tools`
-5. Clone my workshop image (you can write your own later): `git clone git@git.dxw.net:workshop/tomdxw /workbench/workshop`
-6. Since my workshop image uses `WORKDIR /workbench/src` we need to create an extra directory: `mkdir /workbench/src`
-7. Copy ssh keys, i.e.: `cp ~/.ssh/id_rsa /workbench/workshop/keys/`
-8. Set up the docker-machine instance (this mounts /workbench inside the VM): `./init.sh`
-9. Build the base image: `eval "$(docker-machine env default)" && docker build -t thedxw/workshop-base ..` (TODO: if/when we publish this repo on github we can get rid of this step)
-10. If you like, forward some ports from the VM to the host machine to make it easier to work with your web apps, i.e.: `./forward.sh 8000 && ./forward.sh 1080`
-11. Build the workshop image: `./build.sh`
-12. Run the workshop: `./run.sh`
-13. If everything went according to plan you are now sitting inside a tmux session in a docker container on a VM on your host machine
+3. Clone this repo: `git clone git@git.dxw.net:workshop/base workshop-base && cd workshop-base`
+4. Go to the tools dir: `cd workshop-base/tools`
+5. Set up the docker-machine instance (this mounts /workbench inside the VM): `./init.sh`
+6. Build the base image: `eval "$(docker-machine env default)" && docker build -t thedxw/workshop-base ..` (TODO: if/when we publish this repo on github we can get rid of this step)
+7. Run the workshop: `./run.sh`
+8. If everything went according to plan you are now sitting inside a tmux session in a docker container on a VM on your host machine
+
+### Configuring your workshop
+
+To configure your workshop to how you like it, write a new Dockerfile based on the base workshop image:
+
+    FROM thedxw/workshop-base
+
+    # Switch WORKDIR/USER temporarily
+    WORKDIR /
+    USER root
+
+    # do things here
+
+    # Switch WORKDIR/USER back
+    WORKDIR /workbench/src
+    USER core
+
+To see this in action: git@git.dxw.net:workshop/tomdxw
+
+### Help - how do I load in my SSH keys?
+
+There are a couple of approaches:
+
+1. You can just mount your .ssh dir into ~: i.e. add `-v /Users/me/.ssh/:/home/core/.ssh/` to the `docker run` command
+2. Write a new Dockerfile and add symlinks to a location within /workbench: `RUN ln -s /workbench/home/.ssh/id_rsa /home/core/.ssh/id_rsa && ln -s /workbench/home/.ssh/id_rsa.pub /home/core/.ssh/id_rsa.pub`
+3. You could also use the COPY directive in a Dockerfile to put them in
+
+### Port forwarding?
+
+It's inconvenient to constantly be typing IPv4 addresses, so to forward localhost:8000 to the VM:
+
+    ./forward.sh 8000
 
 ### WordPress multisite
 
