@@ -24,8 +24,9 @@ What you will need to do:
 4. Go to the tools dir: `cd workshop-base/tools`
 5. Set up the docker-machine instance (this mounts /workbench inside the VM): `./init.sh`
 6. Build the base image: `eval "$(docker-machine env default)" && docker build -t thedxw/workshop-base ..` (TODO: if/when we publish this repo on github we can get rid of this step)
-7. Run the workshop: `./run.sh`
-8. If everything went according to plan you are now sitting inside a tmux session in a docker container on a VM on your host machine
+7. On the line in `run.sh` that starts "exec docker run", replace the final "workshop" with "thedxw/workshop-base"
+8. Run the workshop: `./run.sh`
+9. If everything went according to plan you are now sitting inside a tmux session in a docker container on a VM on your host machine
 
 ### Configuring your workshop
 
