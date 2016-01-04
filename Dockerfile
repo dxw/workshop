@@ -20,7 +20,7 @@ RUN locale-gen en_US.UTF-8 en_GB.UTF-8
 
 RUN mkdir /src /home/core
 
-RUN apt-get install --no-install-recommends -y build-essential pkg-config automake \
+RUN apt-get install --no-install-recommends -y build-essential pkg-config automake software-properties-common \
                                                locales man-db manpages less manpages-dev \
                                                openssh-client tmux zsh vim-nox \
                                                git mercurial bzr tig git-flow \
