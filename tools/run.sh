@@ -1,8 +1,14 @@
 #!/bin/sh
 set -xe
 
-docker-machine start default || true
-eval "$(docker-machine env default)"
+MACHINE=${1}
+if test X$MACHINE = X; then
+  echo "Usage: ${0} machine-name"
+  exit 1
+fi
+
+docker-machine start ${MACHINE} || true
+eval "$(docker-machine env ${MACHINE})"
 
 if test X`docker inspect --format='{{.State.Running}}' workshop` = Xtrue; then
   exec docker attach workshop
