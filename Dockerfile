@@ -46,7 +46,7 @@ RUN wget --quiet https://bootstrap.pypa.io/get-pip.py -O /src/get-pip.py && \
 # Install things with package managers
 RUN gem install bundler sass && \
     pip install --upgrade docker-compose && \
-    npm install -g grunt-cli bower json standard
+    npm install -g grunt-cli bower json standard standard-format
 
 # Go
 RUN wget --quiet https://storage.googleapis.com/golang/go1.5.1.linux-amd64.tar.gz -O /src/go.tar.gz && \
