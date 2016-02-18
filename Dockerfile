@@ -49,7 +49,7 @@ RUN gem install bundler sass && \
     npm install -g grunt-cli bower json standard standard-format
 
 # Go
-RUN wget --quiet https://storage.googleapis.com/golang/go1.5.1.linux-amd64.tar.gz -O /src/go.tar.gz && \
+RUN wget --quiet https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz -O /src/go.tar.gz && \
     tar -C /usr/local -xzf /src/go.tar.gz && \
     rm /src/go.tar.gz
 ENV PATH=$PATH:/usr/local/go/bin
