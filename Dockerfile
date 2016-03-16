@@ -38,6 +38,12 @@ RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
     echo 'phar.readonly = Off' > /etc/php5/cli/conf.d/99-dxw-phar.ini && \
     echo '{"interactive":false}' > /home/core/.bowerrc
 
+# Update git
+RUN wget --quiet https://github.com/git/git/archive/v2.7.3.tar.gz -O /src/git.tar.gz && \
+    tar -C /src -xzf /src/git.tar.gz && \
+    make -C /src/git-* prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
+    rm -rf /src/git.tar.gz /src/git-*
+
 # Apparently pip2 from APT is broken
 RUN wget --quiet https://bootstrap.pypa.io/get-pip.py -O /src/get-pip.py && \
     python /src/get-pip.py && \
