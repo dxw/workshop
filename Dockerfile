@@ -44,6 +44,14 @@ RUN wget --quiet https://github.com/git/git/archive/v2.8.1.tar.gz -O /src/git.ta
     make -C /src/git-* prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
     rm -rf /src/git.tar.gz /src/git-*
 
+# Update node/npm
+RUN apt-get install -y apt-transport-https && \
+    curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
+    echo 'deb https://deb.nodesource.com/node_4.x wily main' > /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && \
+    apt-get install -y nodejs && \
+    npm install -g npm
+
 # Apparently pip2 from APT is broken
 RUN wget --quiet https://bootstrap.pypa.io/get-pip.py -O /src/get-pip.py && \
     python /src/get-pip.py && \
