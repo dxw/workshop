@@ -69,7 +69,7 @@ RUN GO15VENDOREXPERIMENT=1 GOPATH=/src/go go get github.com/dxw/git-env && \
     rm -rf /src/go
 
 # composer
-RUN wget --quiet https://getcomposer.org/download/1.0.0-alpha10/composer.phar -O /usr/local/bin/composer && \
+RUN wget --quiet https://getcomposer.org/download/1.0.0/composer.phar -O /usr/local/bin/composer && \
     chmod 755 /usr/local/bin/composer
 ENV PATH=$PATH:/usr/local/lib/composer/vendor/bin:~/.composer/vendor/bin
 
