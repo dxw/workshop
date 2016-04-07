@@ -1,7 +1,9 @@
 FROM ubuntu:xenial
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get dist-upgrade -y
+RUN apt-get update && \
+    apt-get dist-upgrade -y && \
+    rm -r /var/lib/apt/lists/*
 
 ##############################################################################
 ## Global configuration
@@ -9,7 +11,9 @@ RUN apt-get update && apt-get dist-upgrade -y
 RUN echo Europe/London > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
 
-RUN apt-get install --no-install-recommends -y sudo
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y sudo && \
+    rm -r /var/lib/apt/lists/*
 RUN echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
 
 # Fix "perl: warning: Setting locale failed."
@@ -20,7 +24,8 @@ RUN locale-gen en_US.UTF-8 en_GB.UTF-8
 
 RUN mkdir /src /home/core
 
-RUN apt-get install --no-install-recommends -y \
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
         build-essential pkg-config automake software-properties-common \
         locales man-db manpages less manpages-dev \
         openssh-client tmux zsh vim-nox \
@@ -31,8 +36,8 @@ RUN apt-get install --no-install-recommends -y \
         silversearcher-ag sloccount zip unzip \
         libpcre3-dev liblzma-dev libxml2-dev libxslt1-dev libmysql++-dev libsqlite3-dev \
         optipng libtool nasm libjpeg-turbo-progs mysql-client nmap cloc ed ripmime oathtool cloc \
-        libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto iproute2 iputils-ping xmlstarlet gnupg2 tree \
-    && rm -r /var/lib/apt/lists/*
+        libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto iproute2 iputils-ping xmlstarlet gnupg2 tree && \
+    rm -r /var/lib/apt/lists/*
 
 # Fix bad defaults
 RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
