@@ -1,4 +1,4 @@
-FROM ubuntu:wily
+FROM ubuntu:xenial
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get dist-upgrade -y
@@ -24,7 +24,8 @@ RUN apt-get install --no-install-recommends -y build-essential pkg-config automa
                                                locales man-db manpages less manpages-dev \
                                                openssh-client tmux zsh vim-nox \
                                                git mercurial bzr tig git-flow \
-                                               python3 python3-pip python python-pip ruby ruby-dev php5-cli php5-mysql php5-gd nodejs npm perl perl-doc \
+                                               python3 python3-pip python python-pip ruby ruby-dev nodejs npm perl perl-doc \
+                                               php7.0-cli php7.0-gd php7.0-mbstring php7.0-mysql php7.0-xml \
                                                curl wget bind9-host netcat whois ca-certificates dnsutils \
                                                silversearcher-ag sloccount zip unzip \
                                                libpcre3-dev liblzma-dev libxml2-dev libxslt1-dev libmysql++-dev libsqlite3-dev \
@@ -34,8 +35,8 @@ RUN apt-get install --no-install-recommends -y build-essential pkg-config automa
 # Fix bad defaults
 RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
     ln -s /usr/bin/nodejs /usr/local/bin/node && \
-    echo 'error_reporting=E_ALL' > /etc/php5/cli/conf.d/99-dxw-errors.ini && \
-    echo 'phar.readonly = Off' > /etc/php5/cli/conf.d/99-dxw-phar.ini && \
+    echo 'error_reporting=E_ALL' > /etc/php/7.0/cli/conf.d/99-dxw-errors.ini && \
+    echo 'phar.readonly = Off' > /etc/php/7.0/cli/conf.d/99-dxw-phar.ini && \
     echo '{"interactive":false}' > /home/core/.bowerrc
 
 # Update git
@@ -44,13 +45,8 @@ RUN wget --quiet https://github.com/git/git/archive/v2.8.1.tar.gz -O /src/git.ta
     make -C /src/git-* prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
     rm -rf /src/git.tar.gz /src/git-*
 
-# Update node/npm
-RUN apt-get install -y apt-transport-https && \
-    curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
-    echo 'deb https://deb.nodesource.com/node_4.x wily main' > /etc/apt/sources.list.d/nodesource.list && \
-    apt-get update && \
-    apt-get install -y nodejs && \
-    npm install -g npm
+# Update npm
+RUN npm install -g npm
 
 # Apparently pip2 from APT is broken
 RUN wget --quiet https://bootstrap.pypa.io/get-pip.py -O /src/get-pip.py && \
