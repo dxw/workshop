@@ -20,17 +20,19 @@ RUN locale-gen en_US.UTF-8 en_GB.UTF-8
 
 RUN mkdir /src /home/core
 
-RUN apt-get install --no-install-recommends -y build-essential pkg-config automake software-properties-common \
-                                               locales man-db manpages less manpages-dev \
-                                               openssh-client tmux zsh vim-nox \
-                                               git mercurial bzr tig git-flow \
-                                               python3 python3-pip python python-pip ruby ruby-dev nodejs npm perl perl-doc \
-                                               php7.0-cli php7.0-gd php7.0-mbstring php7.0-mysql php7.0-xml \
-                                               curl wget bind9-host netcat whois ca-certificates dnsutils \
-                                               silversearcher-ag sloccount zip unzip \
-                                               libpcre3-dev liblzma-dev libxml2-dev libxslt1-dev libmysql++-dev libsqlite3-dev \
-                                               optipng libtool nasm libjpeg-turbo-progs mysql-client nmap cloc ed ripmime oathtool cloc \
-                                               libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto iproute2 iputils-ping xmlstarlet gnupg2 tree
+RUN apt-get install --no-install-recommends -y \
+        build-essential pkg-config automake software-properties-common \
+        locales man-db manpages less manpages-dev \
+        openssh-client tmux zsh vim-nox \
+        git mercurial bzr tig git-flow \
+        python3 python3-pip python python-pip ruby ruby-dev nodejs npm perl perl-doc \
+        php7.0-cli php7.0-gd php7.0-mbstring php7.0-mysql php7.0-xml \
+        curl wget bind9-host netcat whois ca-certificates dnsutils \
+        silversearcher-ag sloccount zip unzip \
+        libpcre3-dev liblzma-dev libxml2-dev libxslt1-dev libmysql++-dev libsqlite3-dev \
+        optipng libtool nasm libjpeg-turbo-progs mysql-client nmap cloc ed ripmime oathtool cloc \
+        libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto iproute2 iputils-ping xmlstarlet gnupg2 tree \
+    && rm -r /var/lib/apt/lists/*
 
 # Fix bad defaults
 RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
