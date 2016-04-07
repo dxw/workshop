@@ -36,7 +36,8 @@ RUN apt-get install --no-install-recommends -y build-essential pkg-config automa
 RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
     ln -s /usr/bin/nodejs /usr/local/bin/node && \
     echo 'error_reporting=E_ALL' > /etc/php/7.0/cli/conf.d/99-dxw-errors.ini && \
-    echo 'phar.readonly = Off' > /etc/php/7.0/cli/conf.d/99-dxw-phar.ini && \
+    echo 'phar.readonly=Off' > /etc/php/7.0/cli/conf.d/99-dxw-phar.ini && \
+    /bin/echo -e '[mail function]\nsendmail_path = /bin/false' > /etc/php/7.0/cli/conf.d/99-dxw-disable-mail.ini && \
     echo '{"interactive":false}' > /home/core/.bowerrc
 
 # Update git
