@@ -14,6 +14,8 @@ ENV LC_ALL=en_GB.UTF-8
 
 RUN echo Europe/London > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
+# workaround: https://bugs.launchpad.net/ubuntu/+source/tzdata/+bug/1554806
+RUN ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y sudo && \
