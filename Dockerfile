@@ -8,6 +8,10 @@ RUN apt-get update && \
 ##############################################################################
 ## Global configuration
 
+# Fix "perl: warning: Setting locale failed."
+RUN locale-gen en_US.UTF-8 en_GB.UTF-8
+ENV LC_ALL=en_GB.UTF-8
+
 RUN echo Europe/London > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
 
@@ -15,9 +19,6 @@ RUN apt-get update && \
     apt-get install --no-install-recommends -y sudo && \
     rm -r /var/lib/apt/lists/*
 RUN echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
-
-# Fix "perl: warning: Setting locale failed."
-RUN locale-gen en_US.UTF-8 en_GB.UTF-8
 
 ##############################################################################
 ## Install tools
