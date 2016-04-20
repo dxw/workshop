@@ -11,23 +11,21 @@ There are two main parts to our approach:
 
 What you will need installed:
 
-- docker-machine (OSX users should install [Docker Toolbox](https://www.docker.com/docker-toolbox))
-- git
-
-Note that this has only been tested with VirtualBox, but may work in other scenarios if you ignore the `init.sh` step.
+- [Docker for Mac](https://docs.docker.com/docker-for-mac/)
+- [git](https://git-scm.com/)
 
 Set up:
 
-1. Set up a docker-machine instance (e.g. `docker-machine create --driver virtualbox default`)
+1. Make sure Docker.app is running
 1. Create your workbench and chown appropriately (e.g. `sudo mkdir /workbench && sudo chown tomdxw:staff /workbench`)
-1. Clone the workshop image (e.g. `git clone https://github.com/dxw/workshop.git`)
-1. You will need to get /workbench mounted inside the VM: `./tools/init.sh default` (replace `default` with the name of the docker-machine VM you created)
+1. In Docker for Mac's preferences, add /workbench as a shared folder
+1. Clone the workshop image: `cd /workbench && git clone https://github.com/dxw/workshop.git`
 
 Run it:
 
-1. `tools/run.sh default thedxw/workshop` (`default` being the docker-machine instance, `thedxw/workshop` being the name of the image you're using)
+1. `/workbench/workshop/tools/run.sh thedxw/workshop` (you can use another image instead of `thedxw/workshop`, such as `thedxw/workshop-tomdxw`)
 
-If everything worked, you should now be sitting inside a zsh session inside tmux.
+If everything worked, you should now be sitting inside a zsh session inside tmux inside Ubuntu inside Docker inside a custom Linux distro inside xhyve inside macOS.
 
 ### Configuring your workshop
 
@@ -45,33 +43,15 @@ To configure your workshop to how you like it, write a new Dockerfile based on t
     WORKDIR /workbench/src
     USER core
 
-To see this in action: https://github.com/dxw/workshop-tomdxw
+Here's an example: https://github.com/dxw/workshop-tomdxw
 
 ### Help - how do I load in my SSH keys?
 
-There are a couple of approaches:
+There are a few approaches:
 
-1. You can just mount your .ssh dir into ~: i.e. add `-v /Users/me/.ssh/:/home/core/.ssh/` to the `docker run` command
-2. Write a new Dockerfile and add symlinks to a location within /workbench: `RUN ln -s /workbench/home/.ssh/id_rsa /home/core/.ssh/id_rsa && ln -s /workbench/home/.ssh/id_rsa.pub /home/core/.ssh/id_rsa.pub`
+1. (Recommended) Write a new Dockerfile and add symlinks to a location within /workbench: `RUN ln -s /workbench/home/.ssh/id_rsa /home/core/.ssh/id_rsa && ln -s /workbench/home/.ssh/id_rsa.pub /home/core/.ssh/id_rsa.pub`
+2. You can just mount your .ssh dir into ~: i.e. add `-v /Users/me/.ssh/:/home/core/.ssh/` to the `docker run` command
 3. You could also use the COPY directive in a Dockerfile to put them in
-
-### Port forwarding?
-
-It's inconvenient to constantly be typing IPv4 addresses, so to permanently forward localhost:8000 to the VM:
-
-    ./forward.sh 8000
-
-### WordPress multisite
-
-Multisite only works on port 80.
-
-Prerequisites:
-
-    brew install socat
-
-Assuming you can access your site via http://mymachine.local:8000, run this script (and leave it running) and you'll be able to access it from http://mymachine.local.
-
-    sudo ./port80.sh
 
 ### Having to press Ctrl-P twice is annoying
 
