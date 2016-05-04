@@ -9,5 +9,5 @@ fi
 
 test X$2 = X && echo 'Usage: ./forward.sh 1234' && exit 1
 
-docker-machine stop ${MACHINE}
+docker-machine stop ${MACHINE} || true
 VBoxManage modifyvm ${MACHINE} --natpf1 "tcp$2,tcp,,$2,,$2"
