@@ -22,7 +22,6 @@ Set up:
 1. Create your workbench and chown appropriately (e.g. `sudo mkdir /workbench && sudo chown tomdxw:staff /workbench`)
 1. Clone the workshop image (e.g. `git clone https://github.com/dxw/workshop.git`)
 1. You will need to get /workbench mounted inside the VM: `./tools/init.sh default` (replace `default` with the name of the docker-machine VM you created)
-1. Build the base image: `eval "$(docker-machine env default)" && docker build -t thedxw/workshop .` (TODO: when this repo is public, this won't be necessary)
 
 Run it:
 
