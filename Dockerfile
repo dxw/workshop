@@ -94,6 +94,13 @@ RUN COMPOSER_HOME=/usr/local/lib/composer sh -c '\
     rm -rf $COMPOSER_HOME/cache\
     '
 
+# Heroku
+RUN echo "deb http://toolbelt.heroku.com/ubuntu ./" > /etc/apt/sources.list.d/heroku.list
+RUN wget -O- https://toolbelt.heroku.com/apt/release.key | apt-key add -
+RUN apt-get update && \
+    apt-get install -y heroku-toolbelt && \
+    rm -r /var/lib/apt/lists/*
+
 # Other tools
 RUN git -C /src clone --quiet --recursive https://github.com/dxw/srdb.git && \
     ln -s /src/srdb/srdb /usr/local/bin/srdb
