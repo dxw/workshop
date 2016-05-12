@@ -42,6 +42,13 @@ RUN apt-get update && \
         libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto iproute2 iputils-ping xmlstarlet gnupg2 tree && \
     rm -r /var/lib/apt/lists/*
 
+# Lets Encrypt root certificate
+RUN wget --quiet https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem -O /usr/local/share/ca-certificates/lets-encrypt-x1-cross-signed.crt && \
+    wget --quiet https://letsencrypt.org/certs/lets-encrypt-x2-cross-signed.pem -O /usr/local/share/ca-certificates/lets-encrypt-x2-cross-signed.crt && \
+    wget --quiet https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem -O /usr/local/share/ca-certificates/lets-encrypt-x3-cross-signed.crt && \
+    wget --quiet https://letsencrypt.org/certs/lets-encrypt-x4-cross-signed.pem -O /usr/local/share/ca-certificates/lets-encrypt-x4-cross-signed.crt && \
+    dpkg-reconfigure ca-certificates
+
 # Fix bad defaults
 RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
     ln -s /usr/bin/nodejs /usr/local/bin/node && \
