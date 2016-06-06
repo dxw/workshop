@@ -83,9 +83,9 @@ RUN wget --quiet https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz 
 ENV PATH=$PATH:/usr/local/go/bin
 
 # Go tools
-RUN GO15VENDOREXPERIMENT=1 GOPATH=/src/go go get github.com/dxw/git-env && \
-    GO15VENDOREXPERIMENT=1 GOPATH=/src/go go get github.com/holizz/pw && \
-    GO15VENDOREXPERIMENT=1 GOPATH=/src/go go get github.com/holizz/diceware && \
+RUN GOPATH=/src/go go get github.com/dxw/git-env && \
+    GOPATH=/src/go go get github.com/holizz/pw && \
+    GOPATH=/src/go go get github.com/holizz/diceware && \
     mv /src/go/bin/* /usr/local/bin/ && \
     rm -rf /src/go
 
