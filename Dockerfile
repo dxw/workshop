@@ -86,7 +86,6 @@ ENV PATH=$PATH:/usr/local/go/bin
 RUN GO15VENDOREXPERIMENT=1 GOPATH=/src/go go get github.com/dxw/git-env && \
     GO15VENDOREXPERIMENT=1 GOPATH=/src/go go get github.com/holizz/pw && \
     GO15VENDOREXPERIMENT=1 GOPATH=/src/go go get github.com/holizz/diceware && \
-    GO15VENDOREXPERIMENT=1 GOPATH=/src/go go get github.com/drone/drone-cli/drone && \
     mv /src/go/bin/* /usr/local/bin/ && \
     rm -rf /src/go
 
