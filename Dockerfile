@@ -86,6 +86,7 @@ ENV PATH=$PATH:/usr/local/go/bin
 RUN GOPATH=/src/go go get github.com/dxw/git-env && \
     GOPATH=/src/go go get github.com/holizz/pw && \
     GOPATH=/src/go go get github.com/holizz/diceware && \
+    GOPATH=/src/go go get github.com/src-d/beanstool && \
     mv /src/go/bin/* /usr/local/bin/ && \
     rm -rf /src/go
 
