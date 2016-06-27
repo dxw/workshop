@@ -61,6 +61,7 @@ RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
 RUN wget --quiet https://github.com/git/git/archive/v2.9.0.tar.gz -O /src/git.tar.gz && \
     tar -C /src -xzf /src/git.tar.gz && \
     make -C /src/git-* prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
+    make -C /src/git-*/contrib/subtree prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
     rm -rf /src/git.tar.gz /src/git-*
 
 # Update npm
