@@ -34,7 +34,7 @@ RUN apt-get update && \
         openssh-client tmux zsh vim-nox \
         git mercurial bzr tig git-flow \
         python3 python3-pip python python-pip ruby ruby-dev nodejs npm perl perl-doc \
-        php7.0-cli php7.0-gd php7.0-mbstring php7.0-mysql php7.0-xml php-xdebug \
+        php7.0-cli php7.0-gd php7.0-mbstring php7.0-mysql php7.0-xml php7.0-curl php-xdebug \
         curl wget bind9-host netcat whois ca-certificates dnsutils \
         silversearcher-ag sloccount zip unzip \
         libpcre3-dev liblzma-dev libxml2-dev libxslt1-dev libmysql++-dev libsqlite3-dev \
