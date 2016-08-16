@@ -1,20 +1,22 @@
 #!/bin/sh
 set -xe
 
-MACHINE=${1}
-IMAGE=${2}
-if test X${MACHINE} = X || test X${IMAGE} = X; then
-  echo "Usage: ${0} machine-name image-name"
-  echo "i.e. ${0} default thedxw/workshop"
+IMAGE=${1}
+if test X${IMAGE} = X; then
+  echo "Usage: ${0} image-name"
+  echo "i.e. ${0} thedxw/workshop"
   exit 1
 fi
 
-docker-machine start ${MACHINE} || true
-eval "$(docker-machine env ${MACHINE})"
+# chown the socket file
+docker run -ti --rm -v /var/run/docker.sock:/var/run/docker.sock busybox chmod 777 /var/run/docker.sock
 
 if test X`docker inspect --format='{{.State.Running}}' workshop` = Xtrue; then
+  # Reattach
   exec docker attach workshop
 else
+  # Remove stale
   docker rm workshop || true
-  exec docker run -ti --rm --name workshop --hostname workshop -e "DOCKER_HOST=${DOCKER_HOST}" -e "DOCKER_TLS_VERIFY=${DOCKER_TLS_VERIFY}" -e DOCKER_CERT_PATH=/docker-cert -v "${DOCKER_CERT_PATH}:/docker-cert:ro" -v /usr/local/bin/docker:/usr/bin/docker:ro -v /workbench:/workbench ${IMAGE}
+  # Start fresh
+  exec docker run -ti --rm --name workshop --hostname workshop -v /usr/bin/docker:/usr/local/bin/docker:ro -v /var/run/docker.sock:/var/run/docker.sock -v /workbench:/workbench ${IMAGE}
 fi
