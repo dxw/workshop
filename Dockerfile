@@ -55,7 +55,7 @@ RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
     echo 'error_reporting=E_ALL' > /etc/php/7.0/cli/conf.d/99-dxw-errors.ini && \
     echo 'phar.readonly=Off' > /etc/php/7.0/cli/conf.d/99-dxw-phar.ini && \
     /bin/echo -e '[mail function]\nsendmail_path = /bin/false' > /etc/php/7.0/cli/conf.d/99-dxw-disable-mail.ini && \
-    echo '{"interactive":false}' > /home/core/.bowerrc
+    echo '{"analytics":false}' > /home/core/.bowerrc
 
 # Update git
 RUN wget --quiet https://github.com/git/git/archive/v2.9.0.tar.gz -O /src/git.tar.gz && \
