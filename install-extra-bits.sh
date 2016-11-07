@@ -9,7 +9,7 @@ BIN=/workbench/local/bin
 mkdir -p ${SRC} ${SHARE} ${BIN}
 
 # pluginscan
-git -C ${SRC} clone --quiet git@git.dxw.net:tools/pluginscan2 pluginscan && \
+git -C ${SRC} clone --quiet git@git.govpress.com:dxw/pluginscan.git pluginscan && \
   mkdir -p ${SHARE}/pluginscan && \
   cp -r ${SRC}/pluginscan/* ${SHARE}/pluginscan && \
   cd ${SHARE}/pluginscan && bundle install --path=vendor/bundle && \
