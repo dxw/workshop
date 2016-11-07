@@ -12,7 +12,7 @@ mkdir -p ${SRC} ${SHARE} ${BIN} ${LIB}
 # pluginscan
 git -C ${SRC} clone --quiet git@git.govpress.com:dxw/pluginscan.git pluginscan && \
   sh -c "cd ${SRC}/pluginscan && gem build pluginscan.gemspec" && \
-  gem install --install-dir=${LIB}/rubygems ${SRC}/pluginscan/pluginscan-0.9.0.gem
+  gem install --install-dir=${LIB}/rubygems ${SRC}/pluginscan/pluginscan-*.gem
   echo '#!/bin/sh' > ${BIN}/pluginscan && \
   echo 'GEM_PATH=${GEM_PATH}:'${LIB}'/rubygems exec '${LIB}'/rubygems/bin/pluginscan ${@}' >> ${BIN}/pluginscan && \
   chmod 755 ${BIN}/pluginscan
