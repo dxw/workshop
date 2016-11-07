@@ -6,15 +6,15 @@ rm -rf /workbench/local
 SRC=/workbench/local/src
 SHARE=/workbench/local/share
 BIN=/workbench/local/bin
-mkdir -p ${SRC} ${SHARE} ${BIN}
+LIB=/workbench/local/lib
+mkdir -p ${SRC} ${SHARE} ${BIN} ${LIB}
 
 # pluginscan
 git -C ${SRC} clone --quiet git@git.govpress.com:dxw/pluginscan.git pluginscan && \
-  mkdir -p ${SHARE}/pluginscan && \
-  cp -r ${SRC}/pluginscan/* ${SHARE}/pluginscan && \
-  cd ${SHARE}/pluginscan && bundle install --path=vendor/bundle && \
+  sh -c "cd ${SRC}/pluginscan && gem build pluginscan.gemspec" && \
+  gem install --install-dir=${LIB}/rubygems ${SRC}/pluginscan/pluginscan-0.9.0.gem
   echo '#!/bin/sh' > ${BIN}/pluginscan && \
-  echo 'BUNDLE_GEMFILE='${SHARE}'/pluginscan/Gemfile exec bundle exec '${SHARE}'/pluginscan/bin/pluginscan $@' >> ${BIN}/pluginscan && \
+  echo 'GEM_PATH=${GEM_PATH}:'${LIB}'/rubygems exec '${LIB}'/rubygems/bin/pluginscan ${@}' >> ${BIN}/pluginscan && \
   chmod 755 ${BIN}/pluginscan
 
 # pupdate
