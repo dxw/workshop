@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM ubuntu:16.10
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
