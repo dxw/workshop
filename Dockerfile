@@ -58,7 +58,7 @@ RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
     echo '{"analytics":false}' > /home/core/.bowerrc
 
 # Update git
-RUN wget --quiet https://github.com/git/git/archive/v2.10.2.tar.gz -O /src/git.tar.gz && \
+RUN wget --quiet https://github.com/git/git/archive/v2.11.0.tar.gz -O /src/git.tar.gz && \
     tar -C /src -xzf /src/git.tar.gz && \
     make -C /src/git-* prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
     make -C /src/git-*/contrib/subtree prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
