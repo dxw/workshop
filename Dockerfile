@@ -39,7 +39,7 @@ RUN apt-get update && \
         silversearcher-ag sloccount zip unzip \
         libpcre3-dev liblzma-dev libxml2-dev libxslt1-dev libmysql++-dev libsqlite3-dev \
         optipng libtool nasm libjpeg-turbo-progs mysql-client nmap cloc ed ripmime oathtool cloc \
-        libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto iproute2 iputils-ping xmlstarlet gnupg2 tree && \
+        libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto iproute2 iputils-ping xmlstarlet gnupg2 tree jq && \
     rm -r /var/lib/apt/lists/*
 
 # Lets Encrypt root certificate
