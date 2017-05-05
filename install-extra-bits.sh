@@ -11,7 +11,7 @@ mkdir -p ${SRC} ${SHARE} ${BIN} ${LIB}
 
 # pluginscan
 gem sources -a https://gems.dxw.net/ && \
-  GEM_HOME=/workbench/local/ruby gem install pluginscan
+  GEM_HOME=/workbench/local/ruby gem install rake pluginscan
 
 # pupdate
 git -C ${SRC} clone --quiet git@git.dxw.net:plugin-updater && \
