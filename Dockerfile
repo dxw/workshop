@@ -116,6 +116,8 @@ RUN git -C /src clone --quiet --recursive https://github.com/dxw/srdb.git && \
 RUN git -C /src clone --quiet --recursive https://github.com/dxw/whippet && \
     cp -r /src/whippet /usr/local/share/whippet && \
     ln -s /usr/local/share/whippet/bin/whippet /usr/local/bin/whippet
+RUN git -C /src clone --quiet https://github.com/dxw/wpc && \
+    cp /src/wpc/bin/* /usr/local/bin
 
 ##############################################################################
 ## Add user
