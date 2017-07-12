@@ -35,7 +35,7 @@ RUN apt-get update && \
         git mercurial bzr tig git-flow \
         python3 python3-pip python python-pip ruby ruby-dev nodejs npm perl perl-doc \
         php7.0-cli php7.0-gd php7.0-mbstring php7.0-mysql php7.0-xml php7.0-curl php-xdebug php-gmp \
-        curl wget bind9-host netcat whois ca-certificates dnsutils \
+        curl wget bind9-host netcat whois ca-certificates dnsutils net-tools \
         silversearcher-ag sloccount zip unzip \
         libpcre3-dev liblzma-dev libxml2-dev libxslt1-dev libmysql++-dev libsqlite3-dev \
         optipng libtool nasm libjpeg-turbo-progs mysql-client nmap cloc ed ripmime oathtool cloc \
