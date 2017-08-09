@@ -33,7 +33,7 @@ RUN apt-get update && \
         locales man-db manpages less manpages-dev \
         openssh-client tmux zsh vim-nox \
         git mercurial bzr tig git-flow \
-        python3 python3-pip python python-pip ruby ruby-dev nodejs npm perl perl-doc \
+        python3 python3-pip python3-setuptools python ruby ruby-dev nodejs npm perl perl-doc \
         php7.0-cli php7.0-gd php7.0-mbstring php7.0-mysql php7.0-xml php7.0-curl php-xdebug php-gmp \
         curl wget bind9-host netcat whois ca-certificates dnsutils net-tools \
         silversearcher-ag sloccount zip unzip \
@@ -68,14 +68,9 @@ RUN wget --quiet https://github.com/git/git/archive/v2.11.0.tar.gz -O /src/git.t
 # Update npm
 RUN npm install -g npm
 
-# Apparently pip2 from APT is broken
-RUN wget --quiet https://bootstrap.pypa.io/get-pip.py -O /src/get-pip.py && \
-    python /src/get-pip.py && \
-    rm /src/get-pip.py
-
 # Install things with package managers
 RUN gem install bundler sass && \
-    pip install --upgrade docker-compose && \
+    pip3 install --upgrade docker-compose && \
     npm install -g grunt-cli bower json standard standard-format yo gulp
 
 # Go
