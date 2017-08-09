@@ -92,12 +92,6 @@ RUN wget --quiet https://getcomposer.org/download/1.4.2/composer.phar -O /usr/lo
     chmod 755 /usr/local/bin/composer
 ENV PATH=$PATH:/usr/local/lib/composer/vendor/bin:~/.composer/vendor/bin
 
-# composer tools
-RUN COMPOSER_HOME=/usr/local/lib/composer sh -c '\
-    composer global require fabpot/php-cs-fixer && \
-    rm -rf $COMPOSER_HOME/cache\
-    '
-
 # Heroku
 RUN echo "deb http://toolbelt.heroku.com/ubuntu ./" > /etc/apt/sources.list.d/heroku.list
 RUN wget -O- https://toolbelt.heroku.com/apt/release.key | apt-key add -
