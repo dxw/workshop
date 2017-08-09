@@ -1,4 +1,4 @@
-FROM ubuntu:16.10
+FROM ubuntu:17.04
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
@@ -8,18 +8,19 @@ RUN apt-get update && \
 ##############################################################################
 ## Global configuration
 
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y locales tzdata sudo && \
+    rm -r /var/lib/apt/lists/*
+
 # Fix "perl: warning: Setting locale failed."
 RUN locale-gen en_US.UTF-8 en_GB.UTF-8
 ENV LC_ALL=en_GB.UTF-8
 
-RUN echo Europe/London > /etc/timezone
-RUN dpkg-reconfigure -f noninteractive tzdata
+RUN echo Europe/London > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata
 # workaround: https://bugs.launchpad.net/ubuntu/+source/tzdata/+bug/1554806
 RUN ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime
 
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y sudo && \
-    rm -r /var/lib/apt/lists/*
 RUN echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
 
 ##############################################################################
