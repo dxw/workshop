@@ -93,9 +93,9 @@ RUN wget --quiet https://getcomposer.org/download/1.4.2/composer.phar -O /usr/lo
 ENV PATH=$PATH:/usr/local/lib/composer/vendor/bin:~/.composer/vendor/bin
 
 # Heroku
-RUN echo "deb http://toolbelt.heroku.com/ubuntu ./" > /etc/apt/sources.list.d/heroku.list
-RUN wget -O- https://toolbelt.heroku.com/apt/release.key | apt-key add -
-RUN apt-get update && \
+RUN echo "deb http://toolbelt.heroku.com/ubuntu ./" > /etc/apt/sources.list.d/heroku.list && \
+    wget --quiet -O- https://toolbelt.heroku.com/apt/release.key | apt-key add - && \
+    apt-get update && \
     apt-get install -y heroku-toolbelt && \
     rm -r /var/lib/apt/lists/*
 
