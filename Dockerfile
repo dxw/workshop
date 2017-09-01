@@ -66,8 +66,9 @@ RUN wget --quiet https://github.com/git/git/archive/v2.14.0.tar.gz -O /src/git.t
     make -C /src/git-*/contrib/subtree prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
     rm -rf /src/git.tar.gz /src/git-*
 
-# Update npm
+# Update package managers
 RUN npm install -g npm
+RUN gem update --system
 
 # Install things with package managers
 RUN gem install bundler sass && \
