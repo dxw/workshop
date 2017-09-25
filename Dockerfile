@@ -30,17 +30,17 @@ RUN mkdir /src /home/core
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-        build-essential pkg-config automake software-properties-common \
+        build-essential pkg-config automake software-properties-common apt-transport-https \
         locales man-db manpages less manpages-dev \
         openssh-client tmux zsh vim-nox \
         git mercurial bzr tig git-flow \
-        python3 python3-pip python3-setuptools python ruby ruby-dev nodejs npm perl perl-doc \
+        python3 python3-pip python3-setuptools python ruby ruby-dev perl perl-doc \
         php7.0-cli php7.0-gd php7.0-mbstring php7.0-mysql php7.0-xml php7.0-curl php-xdebug php-gmp \
         curl wget bind9-host netcat whois ca-certificates dnsutils net-tools \
         silversearcher-ag sloccount zip unzip \
         libpcre3-dev liblzma-dev libxml2-dev libxslt1-dev libmysql++-dev libsqlite3-dev \
         optipng libtool nasm libjpeg-turbo-progs mysql-client nmap cloc ed ripmime oathtool cloc \
-        libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto iproute2 iputils-ping xmlstarlet gnupg2 tree jq && \
+        libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto iproute2 iputils-ping xmlstarlet gnupg2 tree jq libssl-dev && \
     rm -r /var/lib/apt/lists/*
 
 # Lets Encrypt root certificate
@@ -52,7 +52,6 @@ RUN wget --quiet https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem 
 
 # Fix bad defaults
 RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
-    ln -s /usr/bin/nodejs /usr/local/bin/node && \
     echo 'error_reporting=E_ALL' > /etc/php/7.0/cli/conf.d/99-dxw-errors.ini && \
     echo 'phar.readonly=Off' > /etc/php/7.0/cli/conf.d/99-dxw-phar.ini && \
     echo 'xdebug.var_display_max_depth=99999' > /etc/php/7.0/cli/conf.d/99-dxw-fix-xdebug-var-dump.ini && \
@@ -66,8 +65,14 @@ RUN wget --quiet https://github.com/git/git/archive/v2.14.0.tar.gz -O /src/git.t
     make -C /src/git-*/contrib/subtree prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
     rm -rf /src/git.tar.gz /src/git-*
 
+# NodeJS
+RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
+    echo 'deb https://deb.nodesource.com/node_8.x '`lsb_release -c -s`' main' > /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && \
+    apt-get install -y nodejs && \
+    rm -r /var/lib/apt/lists/*
+
 # Update package managers
-RUN npm install -g npm
 RUN gem update --system
 
 # Install things with package managers
