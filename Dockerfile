@@ -75,11 +75,6 @@ RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
 # Update package managers
 RUN gem update --system
 
-# Install things with package managers
-RUN gem install bundler sass && \
-    pip3 install --upgrade docker-compose && \
-    npm install -g grunt-cli bower json standard standard-format yo gulp
-
 # Go
 RUN wget --quiet https://storage.googleapis.com/golang/`curl -s https://golang.org/VERSION?m=text`.linux-amd64.tar.gz -O /src/go.tar.gz && \
     tar -C /usr/local -xzf /src/go.tar.gz && \
@@ -105,6 +100,18 @@ RUN echo "deb http://toolbelt.heroku.com/ubuntu ./" > /etc/apt/sources.list.d/he
     apt-get update && \
     apt-get install -y heroku-toolbelt && \
     rm -r /var/lib/apt/lists/*
+
+# yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && \
+    apt-get install -y yarn && \
+    rm -r /var/lib/apt/lists/*
+
+# Install things with package managers
+RUN gem install bundler sass && \
+    pip3 install --upgrade docker-compose && \
+    yarn global add grunt-cli bower json standard standard-format yo gulp
 
 # Other tools
 RUN git -C /src clone --quiet --recursive https://github.com/dxw/srdb.git && \
