@@ -51,13 +51,6 @@ RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
     /bin/echo -e '[mail function]\nsendmail_path = /bin/false' > /etc/php/7.0/cli/conf.d/99-dxw-disable-mail.ini && \
     echo '{"analytics":false}' > /home/core/.bowerrc
 
-# Update git
-RUN wget --quiet https://github.com/git/git/archive/v2.14.0.tar.gz -O /src/git.tar.gz && \
-    tar -C /src -xzf /src/git.tar.gz && \
-    make -C /src/git-* prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
-    make -C /src/git-*/contrib/subtree prefix=/usr/local NO_TCLTK=1 all doc install install-doc && \
-    rm -rf /src/git.tar.gz /src/git-*
-
 # NodeJS
 RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
     echo 'deb https://deb.nodesource.com/node_8.x '`lsb_release -c -s`' main' > /etc/apt/sources.list.d/nodesource.list && \
