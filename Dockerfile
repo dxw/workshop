@@ -43,13 +43,6 @@ RUN apt-get update && \
         libcurl4-openssl-dev libexpat1-dev gettext asciidoc xsltproc xmlto iproute2 iputils-ping xmlstarlet gnupg2 tree jq libssl-dev && \
     rm -r /var/lib/apt/lists/*
 
-# Lets Encrypt root certificate
-RUN wget --quiet https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem -O /usr/local/share/ca-certificates/lets-encrypt-x1-cross-signed.crt && \
-    wget --quiet https://letsencrypt.org/certs/lets-encrypt-x2-cross-signed.pem -O /usr/local/share/ca-certificates/lets-encrypt-x2-cross-signed.crt && \
-    wget --quiet https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem -O /usr/local/share/ca-certificates/lets-encrypt-x3-cross-signed.crt && \
-    wget --quiet https://letsencrypt.org/certs/lets-encrypt-x4-cross-signed.pem -O /usr/local/share/ca-certificates/lets-encrypt-x4-cross-signed.crt && \
-    dpkg-reconfigure ca-certificates
-
 # Fix bad defaults
 RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
     echo 'error_reporting=E_ALL' > /etc/php/7.0/cli/conf.d/99-dxw-errors.ini && \
