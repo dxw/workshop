@@ -1,4 +1,4 @@
-FROM ubuntu:17.04
+FROM ubuntu:17.10
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
@@ -35,7 +35,7 @@ RUN apt-get update && \
         openssh-client tmux zsh vim-nox \
         git mercurial bzr tig git-flow \
         python3 python3-pip python3-setuptools python ruby ruby-dev perl perl-doc \
-        php7.0-cli php7.0-gd php7.0-mbstring php7.0-mysql php7.0-xml php7.0-curl php-xdebug php-gmp \
+        php-cli php-gd php-mbstring php-mysql php-xml php-curl php-xdebug php-gmp \
         curl wget bind9-host netcat whois ca-certificates dnsutils net-tools \
         silversearcher-ag sloccount zip unzip \
         libpcre3-dev liblzma-dev libxml2-dev libxslt1-dev libmysql++-dev libsqlite3-dev \
@@ -45,10 +45,10 @@ RUN apt-get update && \
 
 # Fix bad defaults
 RUN echo 'install: --no-rdoc --no-ri' > /etc/gemrc && \
-    echo 'error_reporting=E_ALL' > /etc/php/7.0/cli/conf.d/99-dxw-errors.ini && \
-    echo 'phar.readonly=Off' > /etc/php/7.0/cli/conf.d/99-dxw-phar.ini && \
-    echo 'xdebug.var_display_max_depth=99999' > /etc/php/7.0/cli/conf.d/99-dxw-fix-xdebug-var-dump.ini && \
-    /bin/echo -e '[mail function]\nsendmail_path = /bin/false' > /etc/php/7.0/cli/conf.d/99-dxw-disable-mail.ini && \
+    echo 'error_reporting=E_ALL' > /etc/php/7.1/cli/conf.d/99-dxw-errors.ini && \
+    echo 'phar.readonly=Off' > /etc/php/7.1/cli/conf.d/99-dxw-phar.ini && \
+    echo 'xdebug.var_display_max_depth=99999' > /etc/php/7.1/cli/conf.d/99-dxw-fix-xdebug-var-dump.ini && \
+    /bin/echo -e '[mail function]\nsendmail_path = /bin/false' > /etc/php/7.1/cli/conf.d/99-dxw-disable-mail.ini && \
     echo '{"analytics":false}' > /home/core/.bowerrc
 
 # NodeJS
